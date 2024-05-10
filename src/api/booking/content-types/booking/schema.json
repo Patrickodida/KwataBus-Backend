@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "BookingID": {
+      "type": "uid"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "bookings"
+    },
+    "bus_routes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bus-route.bus-route",
+      "mappedBy": "booking"
+    },
+    "Date": {
+      "type": "date"
+    },
+    "SeatNumber": {
+      "type": "integer"
+    },
+    "PaymentStatus": {
+      "type": "boolean"
+    }
+  }
+}

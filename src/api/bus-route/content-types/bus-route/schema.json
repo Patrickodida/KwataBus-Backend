@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bus_routes",
+  "info": {
+    "singularName": "bus-route",
+    "pluralName": "bus-routes",
+    "displayName": "BusRoute"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "RouteID": {
+      "type": "uid"
+    },
+    "DepartureTown": {
+      "type": "string"
+    },
+    "ArrivalTown": {
+      "type": "string"
+    },
+    "DepartureTime": {
+      "type": "time"
+    },
+    "ArrivalTime": {
+      "type": "datetime"
+    },
+    "Fare": {
+      "type": "biginteger"
+    },
+    "BusCompany": {
+      "type": "string"
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::booking.booking",
+      "inversedBy": "bus_routes"
+    },
+    "feedbacks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::feedback.feedback",
+      "mappedBy": "bus_route"
+    }
+  }
+}

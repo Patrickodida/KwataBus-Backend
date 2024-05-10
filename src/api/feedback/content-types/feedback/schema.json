@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "feedbacks",
+  "info": {
+    "singularName": "feedback",
+    "pluralName": "feedbacks",
+    "displayName": "Feedback"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "FeedbackID": {
+      "type": "uid"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "feedbacks"
+    },
+    "bus_route": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::bus-route.bus-route",
+      "inversedBy": "feedbacks"
+    },
+    "Rating": {
+      "type": "integer"
+    },
+    "Comment": {
+      "type": "string"
+    },
+    "Date": {
+      "type": "datetime"
+    }
+  }
+}
