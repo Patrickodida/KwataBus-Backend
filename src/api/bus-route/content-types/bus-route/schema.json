@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bus-route",
     "pluralName": "bus-routes",
-    "displayName": "BusRoute"
+    "displayName": "BusRoute",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -29,20 +30,17 @@
     "Fare": {
       "type": "biginteger"
     },
-    "BusCompany": {
-      "type": "string"
-    },
-    "booking": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::booking.booking",
-      "inversedBy": "bus_routes"
-    },
     "feedbacks": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::feedback.feedback",
       "mappedBy": "bus_route"
+    },
+    "bus_services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::bus-service.bus-service",
+      "inversedBy": "bus_routes"
     }
   }
 }

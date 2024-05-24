@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bus_services",
+  "info": {
+    "singularName": "bus-service",
+    "pluralName": "bus-services",
+    "displayName": "BusService"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "busId": {
+      "type": "uid",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "bus_routes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::bus-route.bus-route",
+      "mappedBy": "bus_services"
+    }
+  }
+}

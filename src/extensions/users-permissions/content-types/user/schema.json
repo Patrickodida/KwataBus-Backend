@@ -91,6 +91,12 @@
       "relation": "oneToMany",
       "target": "api::feedback.feedback",
       "mappedBy": "users_permissions_user"
+    },
+    "seats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seat.seat",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

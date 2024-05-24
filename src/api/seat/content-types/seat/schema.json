@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "seats",
+  "info": {
+    "singularName": "seat",
+    "pluralName": "seats",
+    "displayName": "Seat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seatId": {
+      "type": "uid",
+      "required": true
+    },
+    "seatNumber": {
+      "type": "string",
+      "required": true
+    },
+    "booked": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "seats"
+    },
+    "bus_routes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bus-route.bus-route"
+    }
+  }
+}

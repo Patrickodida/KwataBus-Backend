@@ -741,6 +741,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::feedback.feedback'
     >;
+    seats: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::seat.seat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -846,6 +851,7 @@ export interface ApiBookingBooking extends Schema.CollectionType {
     singularName: 'booking';
     pluralName: 'bookings';
     displayName: 'Booking';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -857,14 +863,18 @@ export interface ApiBookingBooking extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    bus_routes: Attribute.Relation<
+    bus_route: Attribute.Relation<
       'api::booking.booking',
-      'oneToMany',
+      'oneToOne',
       'api::bus-route.bus-route'
     >;
     Date: Attribute.Date;
-    SeatNumber: Attribute.Integer;
     PaymentStatus: Attribute.Boolean;
+    seats: Attribute.Relation<
+      'api::booking.booking',
+      'oneToMany',
+      'api::seat.seat'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -889,6 +899,7 @@ export interface ApiBusRouteBusRoute extends Schema.CollectionType {
     singularName: 'bus-route';
     pluralName: 'bus-routes';
     displayName: 'BusRoute';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -900,16 +911,15 @@ export interface ApiBusRouteBusRoute extends Schema.CollectionType {
     DepartureTime: Attribute.Time;
     ArrivalTime: Attribute.DateTime;
     Fare: Attribute.BigInteger;
-    BusCompany: Attribute.String;
-    booking: Attribute.Relation<
-      'api::bus-route.bus-route',
-      'manyToOne',
-      'api::booking.booking'
-    >;
     feedbacks: Attribute.Relation<
       'api::bus-route.bus-route',
       'oneToMany',
       'api::feedback.feedback'
+    >;
+    bus_services: Attribute.Relation<
+      'api::bus-route.bus-route',
+      'manyToMany',
+      'api::bus-service.bus-service'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -922,6 +932,42 @@ export interface ApiBusRouteBusRoute extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::bus-route.bus-route',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBusServiceBusService extends Schema.CollectionType {
+  collectionName: 'bus_services';
+  info: {
+    singularName: 'bus-service';
+    pluralName: 'bus-services';
+    displayName: 'BusService';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    busId: Attribute.UID & Attribute.Required;
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    bus_routes: Attribute.Relation<
+      'api::bus-service.bus-service',
+      'manyToMany',
+      'api::bus-route.bus-route'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::bus-service.bus-service',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::bus-service.bus-service',
       'oneToOne',
       'admin::user'
     > &
@@ -1038,6 +1084,40 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
   };
 }
 
+export interface ApiSeatSeat extends Schema.CollectionType {
+  collectionName: 'seats';
+  info: {
+    singularName: 'seat';
+    pluralName: 'seats';
+    displayName: 'Seat';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    seatId: Attribute.UID & Attribute.Required;
+    seatNumber: Attribute.String & Attribute.Required;
+    booked: Attribute.Boolean & Attribute.Required & Attribute.DefaultTo<false>;
+    users_permissions_user: Attribute.Relation<
+      'api::seat.seat',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    bus_routes: Attribute.Relation<
+      'api::seat.seat',
+      'oneToMany',
+      'api::bus-route.bus-route'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::seat.seat', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::seat.seat', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1059,9 +1139,11 @@ declare module '@strapi/types' {
       'api::admin.admin': ApiAdminAdmin;
       'api::booking.booking': ApiBookingBooking;
       'api::bus-route.bus-route': ApiBusRouteBusRoute;
+      'api::bus-service.bus-service': ApiBusServiceBusService;
       'api::faq.faq': ApiFaqFaq;
       'api::feedback.feedback': ApiFeedbackFeedback;
       'api::payment.payment': ApiPaymentPayment;
+      'api::seat.seat': ApiSeatSeat;
     }
   }
 }
