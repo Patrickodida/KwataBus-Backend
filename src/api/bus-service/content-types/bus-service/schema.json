@@ -11,14 +11,14 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "busId": {
-      "type": "uid",
-      "required": true
-    },
-    "name": {
+    "BusID": {
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "Name": {
+      "type": "string",
+      "required": true
     },
     "bus_routes": {
       "type": "relation",

@@ -29,11 +29,6 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "seats"
-    },
-    "bus_routes": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::bus-route.bus-route"
     }
   }
 }

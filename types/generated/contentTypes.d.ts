@@ -863,11 +863,6 @@ export interface ApiBookingBooking extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    bus_route: Attribute.Relation<
-      'api::booking.booking',
-      'oneToOne',
-      'api::bus-route.bus-route'
-    >;
     Date: Attribute.Date;
     PaymentStatus: Attribute.Boolean;
     seats: Attribute.Relation<
@@ -905,21 +900,21 @@ export interface ApiBusRouteBusRoute extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    RouteID: Attribute.UID;
-    DepartureTown: Attribute.String;
-    ArrivalTown: Attribute.String;
-    DepartureTime: Attribute.Time;
-    ArrivalTime: Attribute.DateTime;
+    RouteID: Attribute.String & Attribute.Required & Attribute.Unique;
+    DepartureTown: Attribute.String & Attribute.Required;
+    ArrivalTown: Attribute.String & Attribute.Required;
+    DepartureTime: Attribute.Time & Attribute.Required;
+    ArrivalTime: Attribute.Time;
     Fare: Attribute.BigInteger;
-    feedbacks: Attribute.Relation<
-      'api::bus-route.bus-route',
-      'oneToMany',
-      'api::feedback.feedback'
-    >;
     bus_services: Attribute.Relation<
       'api::bus-route.bus-route',
       'manyToMany',
       'api::bus-service.bus-service'
+    >;
+    feedbacks: Attribute.Relation<
+      'api::bus-route.bus-route',
+      'oneToMany',
+      'api::feedback.feedback'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -950,8 +945,8 @@ export interface ApiBusServiceBusService extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    busId: Attribute.UID & Attribute.Required;
-    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    BusID: Attribute.String & Attribute.Required & Attribute.Unique;
+    Name: Attribute.String & Attribute.Required;
     bus_routes: Attribute.Relation<
       'api::bus-service.bus-service',
       'manyToMany',
@@ -1014,11 +1009,6 @@ export interface ApiFeedbackFeedback extends Schema.CollectionType {
       'api::feedback.feedback',
       'manyToOne',
       'plugin::users-permissions.user'
-    >;
-    bus_route: Attribute.Relation<
-      'api::feedback.feedback',
-      'manyToOne',
-      'api::bus-route.bus-route'
     >;
     Rating: Attribute.Integer;
     Comment: Attribute.String;
@@ -1102,11 +1092,6 @@ export interface ApiSeatSeat extends Schema.CollectionType {
       'api::seat.seat',
       'manyToOne',
       'plugin::users-permissions.user'
-    >;
-    bus_routes: Attribute.Relation<
-      'api::seat.seat',
-      'oneToMany',
-      'api::bus-route.bus-route'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

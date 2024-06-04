@@ -13,34 +13,39 @@
   "pluginOptions": {},
   "attributes": {
     "RouteID": {
-      "type": "uid"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
     "DepartureTown": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "ArrivalTown": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "DepartureTime": {
-      "type": "time"
+      "type": "time",
+      "required": true
     },
     "ArrivalTime": {
-      "type": "datetime"
+      "type": "time",
+      "required": false
     },
     "Fare": {
       "type": "biginteger"
-    },
-    "feedbacks": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::feedback.feedback",
-      "mappedBy": "bus_route"
     },
     "bus_services": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::bus-service.bus-service",
       "inversedBy": "bus_routes"
+    },
+    "feedbacks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::feedback.feedback"
     }
   }
 }

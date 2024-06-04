@@ -20,12 +20,6 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "feedbacks"
     },
-    "bus_route": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::bus-route.bus-route",
-      "inversedBy": "feedbacks"
-    },
     "Rating": {
       "type": "integer"
     },

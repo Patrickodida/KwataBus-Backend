@@ -21,11 +21,6 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "bookings"
     },
-    "bus_route": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::bus-route.bus-route"
-    },
     "Date": {
       "type": "date"
     },
