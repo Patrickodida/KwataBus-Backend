@@ -916,6 +916,16 @@ export interface ApiBusRouteBusRoute extends Schema.CollectionType {
       'oneToMany',
       'api::feedback.feedback'
     >;
+    seats: Attribute.Relation<
+      'api::bus-route.bus-route',
+      'oneToMany',
+      'api::seat.seat'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::bus-route.bus-route',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

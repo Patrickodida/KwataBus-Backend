@@ -46,6 +46,16 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::feedback.feedback"
+    },
+    "seats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seat.seat"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
